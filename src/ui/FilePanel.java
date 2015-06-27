@@ -1,7 +1,8 @@
 package ui;
 
+import utilities.FileParser;
+
 import javax.swing.*;
-import javax.swing.filechooser.FileView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,7 +61,8 @@ public class FilePanel extends JPanel
         String fileLocation = textField.getText();
         if(fileLocation != null)
         {
-            // Parse file & solve
+            FileParser myFileParser;
+            myFileParser = new FileParser(fileLocation);
         }
     }
 }
