@@ -14,16 +14,34 @@ public class MyPoint extends Point
 
     private int bound;
     private Point dest;
+    private MyPoint parent;
 
-    public MyPoint(int x, int y, Point dest)
+    public MyPoint getParent()
+    {
+        return parent;
+    }
+
+    public MyPoint(int x, int y, Point dest, MyPoint parent)
     {
         super(x, y);
+
         this.dest = dest;
-        bound = calcBound();
+        this.parent = parent;
+        this.bound = calcBound();
     }
 
     private int calcBound()
     {
         return Math.abs( x-dest.x ) + Math.abs(y-dest.y);
+    }
+
+    public int getX_int()
+    {
+        return (int)super.getX();
+    }
+
+    public int getY_int()
+    {
+        return (int)super.getY();
     }
 }
