@@ -8,16 +8,16 @@ import java.util.*;
  */
 public class PairPoint
 {
-    private MyPoint origin;
-    private MyPoint dest;
+    private Point origin;
+    private Point dest;
     private Vector<MyPoint> queue;
 
-    public MyPoint getOrigin()
+    public Point getOrigin()
     {
         return origin;
     }
 
-    public MyPoint getDest()
+    public Point getDest()
     {
         return dest;
     }
@@ -27,7 +27,7 @@ public class PairPoint
         return queue;
     }
 
-    public PairPoint(MyPoint origin, MyPoint dest)
+    public PairPoint(Point origin, Point dest)
     {
         this.origin = origin;
         this.dest = dest;

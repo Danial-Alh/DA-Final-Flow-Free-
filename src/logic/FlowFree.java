@@ -4,6 +4,7 @@ import utilities.MyPoint;
 import utilities.PairPoint;
 import utilities.ResultGraph;
 
+import java.awt.*;
 import java.util.Vector;
 
 /**
@@ -45,24 +46,27 @@ public class FlowFree
 
         PairPoint pairPoint = pairPoints.elementAt(pairIndex);
         MyPoint firstPoint = new MyPoint(
-                pairPoint.getOrigin().getX_int(),
-                pairPoint.getOrigin().getY_int(),
+                (int)pairPoint.getOrigin().getX(),
+                (int)pairPoint.getOrigin().getY(),
                 pairPoint.getDest(),
                 null );
-       pairPoint.init();
-       pairPoint.getQueue().add(firstPoint);
+        pairPoint.init();
+        pairPoint.getQueue().add(firstPoint);
         while( !pairPoints.elementAt(pairIndex).getQueue().isEmpty() )
         {
             Vector<MyPoint> queue = pairPoint.getQueue();
             MyPoint point = queue.remove(0);
             writePathOnGraph(point, pairIndex);
+//            System.out.println("********************START");
+//            printGraph();
+//            System.out.println();
 
             for( int[] nextPoint : nextPoints)
             {
                 if( isValid(point, nextPoint) )
                 {
-                    MyPoint dest = pairPoint.getDest();
-                    if( point.getX_int() == dest.getX_int() && point.getY_int() == dest.getY_int() )
+                    Point dest = pairPoint.getDest();
+                    if( point.getX_int() == (int)dest.getX() && point.getY_int() == (int)dest.getY() )
                     {
                         result.getMoves()[pairIndex] = moves+1;
                         solve( pairIndex+1, 0 );
@@ -71,10 +75,22 @@ public class FlowFree
                         queue.add(new MyPoint(point.getX_int() + nextPoint[0], point.getY_int() + nextPoint[1], dest, point));
                 }
             }
-            removePathFromGraph( point );
+            removePathFromGraph(point);
+//            System.out.println("********************SECOND");
+//            printGraph();
+            System.out.println( queue.toString() );
         }
     }
 
+    void printGraph()
+    {
+        for( int i = 0; i < graph.length; i++)
+        {
+            for( int j = 0; j < graph[0].length; j++)
+                System.out.print( graph[i][j] + " " );
+            System.out.println();
+        }
+    }
     private boolean isValid(MyPoint point, int[] nextPoint)
     {
         int x =point.getX_int() + nextPoint[0],
@@ -113,6 +129,7 @@ public class FlowFree
 
     private void updateMax()
     {
+        System.out.println( "here\n");
         int min = 0;
         for( int move : result.getMoves() )
             min += move;
@@ -120,8 +137,14 @@ public class FlowFree
         {
             result.setMin( min );
             for( int i = 0; i < graph.length; i++)
+            {
                 for( int j = 0; j < graph[0].length; j++)
+                {
                     result.getGraph()[i][j] = graph[i][j];
+                    System.out.print( graph[i][j] + " " );
+                }
+                System.out.println();
+            }
         }
     }
 }
