@@ -33,10 +33,10 @@ public class FlowFree
     public void solve()
     {
         if( pairPoints.size() > 0 )
-            solve(0, 0);
+            solve(0);
     }
 
-    private void solve( int pairIndex, int moves )
+    private void solve(int pairIndex)
     {
         if( pairIndex == pairPoints.size() )
         {
@@ -56,29 +56,27 @@ public class FlowFree
         {
             Vector<MyPoint> queue = pairPoint.getQueue();
             MyPoint point = queue.remove(0);
-            writePathOnGraph(point, pairIndex);
-//            System.out.println("********************START");
+            int moves = writePathOnGraph(point, pairIndex);
+//            System.out.println("****************************************\t" + pairIndex + "\t*******************************");
 //            printGraph();
-//            System.out.println();
-
             for( int[] nextPoint : nextPoints)
             {
-                if( isValid(point, nextPoint) )
+                Point dest = pairPoint.getDest();
+                if( isValid(point, nextPoint, pairIndex) )
                 {
-                    Point dest = pairPoint.getDest();
-                    if( point.getX_int() == (int)dest.getX() && point.getY_int() == (int)dest.getY() )
+                    if( point.getX_int() + nextPoint[0] == (int)dest.getX() && point.getY_int() + nextPoint[1] == (int)dest.getY() )
                     {
                         result.getMoves()[pairIndex] = moves+1;
-                        solve( pairIndex+1, 0 );
+//                        System.out.println( "****************************************\t" + pairIndex + "\t*******************************");
+//                        printGraph();
+//                        System.out.println("***********************************************************************");
+                        solve( pairIndex+1);
                     }
                     else
                         queue.add(new MyPoint(point.getX_int() + nextPoint[0], point.getY_int() + nextPoint[1], dest, point));
                 }
             }
             removePathFromGraph(point);
-//            System.out.println("********************SECOND");
-//            printGraph();
-            System.out.println( queue.toString() );
         }
     }
 
@@ -91,7 +89,7 @@ public class FlowFree
             System.out.println();
         }
     }
-    private boolean isValid(MyPoint point, int[] nextPoint)
+    private boolean isValid(MyPoint point, int[] nextPoint, int pairIndex)
     {
         int x =point.getX_int() + nextPoint[0],
             y = point.getY_int() + nextPoint[1];
@@ -104,9 +102,12 @@ public class FlowFree
             return false;
         if( y < 0 )
             return false;
-        if( graph[x][y] != -1 )
-            return false;
-        return true;
+        Point dest = pairPoints.elementAt(pairIndex).getDest();
+        if( graph[x][y] == pairIndex && dest.getX() == x && dest.getY() == y)
+            return true;
+        if( graph[x][y] == -1)
+            return true;
+        return false;
     }
 
     private void removePathFromGraph(MyPoint point)
@@ -118,23 +119,24 @@ public class FlowFree
         }
     }
 
-    private void writePathOnGraph(MyPoint point, int pairIndex)
+    private int writePathOnGraph(MyPoint point, int pairIndex)
     {
         if( point.getParent() != null )
         {
             graph[point.getX_int()][point.getY_int()] = pairIndex;
-            writePathOnGraph( point.getParent(), pairIndex);
+            return writePathOnGraph( point.getParent(), pairIndex) + 1;
         }
+        return 0;
     }
 
     private void updateMax()
     {
-        System.out.println( "here\n");
         int min = 0;
         for( int move : result.getMoves() )
             min += move;
         if( min < result.getMin() )
         {
+            System.out.println( "here\n");
             result.setMin( min );
             for( int i = 0; i < graph.length; i++)
             {
@@ -145,6 +147,7 @@ public class FlowFree
                 }
                 System.out.println();
             }
+            System.out.println();
         }
     }
 }
