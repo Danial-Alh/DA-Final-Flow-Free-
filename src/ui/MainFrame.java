@@ -1,7 +1,12 @@
 package ui;
 
+import logic.FlowFree;
+import utilities.MyPoint;
+import utilities.PairPoint;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 /**
  * Created by Dani on 6/27/2015.
@@ -21,6 +26,21 @@ public class MainFrame extends JFrame
 
     }
     public static void main(String[] arg){
-        new MainFrame("Flow Free", 800, 650);
+
+        int[][] graph = {
+                {-1,-1,-1,-1,-1,-1},
+                {-1,-1, 1,-1, 0,-1},
+                {-1,-1,-1,-1,-1,-1},
+                { 0,-1,-1,-1,-1, 2},
+                {-1, 2,-1,-1, 1,-1},
+                {-1,-1,-1,-1,-1,-1}
+        };
+
+        Vector<PairPoint> pairPoints = new Vector<PairPoint>();
+        pairPoints.add( new PairPoint( new Point(3,0), new Point(1,4) ) );
+        pairPoints.add( new PairPoint( new Point(1,2), new Point(4,4) ) );
+        pairPoints.add( new PairPoint( new Point(4,1), new Point(3,5) ) );
+        FlowFree flowFree = new FlowFree( graph, pairPoints);
+        flowFree.solve();
     }
 }
