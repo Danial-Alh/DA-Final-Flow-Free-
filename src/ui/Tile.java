@@ -14,6 +14,7 @@ public class Tile extends JButton
         this.value = value;
         setSize(50, 50);
         setEnabled(false);
+        setText("" + value);
     }
 
 

@@ -19,19 +19,18 @@ public class MainFrame extends JFrame
         setResizable(false);
 
         //  temp
-        graphPanel = new MainPanel(10, 4, w, h);
-        graphPanel.setSize(w-6, h * 3 / 4);
-        graphPanel.setLocation(0, 0);
-        getContentPane().add(graphPanel);
+//        graphPanel = new MainPanel(10, 4, w, h);
+//        graphPanel.setSize(w-6, h * 3 / 4);
+//        graphPanel.setLocation(0, 0);
+//        getContentPane().add(graphPanel);
         // temp
 
 
-        filePanel = new FilePanel();
+        filePanel = new FilePanel(w, h, this);
         filePanel.setSize(w-6, h*1/4-27);
         filePanel.setLocation(0, h * 3 / 4-1);
         getContentPane().add(filePanel);
 
-        getContentPane().setBackground(Color.GRAY);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 

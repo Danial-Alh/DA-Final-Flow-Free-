@@ -1,5 +1,7 @@
 package ui;
 
+import utilities.ResultGraph;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,19 +10,15 @@ import java.awt.*;
  */
 public class MainPanel extends JPanel
 {
-    int graphX, graphY;
     int myOffsetX;
     int myOffsetY;
     Tile[][] tiles;
     //int [][] values;
 
-    public MainPanel(int graphX, int graphY, int w, int h/*, int[][] values*/)
+    public MainPanel(int graphX, int graphY, int w, int h, ResultGraph result)
     {
         setLayout(null);
         setBorder(BorderFactory.createLineBorder(Color.black));
-        this.graphX = graphX;
-        this.graphY = graphY;
-        //this.values = values;
 
         myOffsetX = (w-6 - graphX*50) / 2;
         myOffsetY = (h * 3 / 4 - graphY*50) / 2;
@@ -30,9 +28,8 @@ public class MainPanel extends JPanel
         {
             for(int i=0; i<graphX; i++)
             {
-                tiles[i][j] = new Tile(1);
+                tiles[i][j] = new Tile(result.getGraph()[i][j]);
                 tiles[i][j].setLocation(myOffsetX + i*50, myOffsetY + j*50);
-                //tiles[i][j].setValue(values[i][j]);
                 add(tiles[i][j]);
             }
         }

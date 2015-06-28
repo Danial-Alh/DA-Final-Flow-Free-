@@ -1,7 +1,10 @@
 package utilities;
 
 import logic.FlowFree;
+import ui.MainFrame;
+import ui.MainPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,13 +17,14 @@ import java.util.Vector;
  */
 public class FileParser {
 
+    JPanel graphPanel;
     String fileName;
     String inputData;
     int graphSize;
     int[][] graph;
     Vector<PairPoint> pairPoints;
 
-    public FileParser(String fileName)
+    public FileParser(String fileName, int w, int h, MainFrame mainFrame)
     {
         this.fileName = fileName;
         inputData = "";
@@ -32,7 +36,12 @@ public class FileParser {
 
         FlowFree flowFree;
         flowFree = new FlowFree(graph, pairPoints);
+        flowFree.solve();
 
+        graphPanel = new MainPanel(graphSize, graphSize, w, h, flowFree.result);
+        graphPanel.setSize(w-6, h * 3 / 4);
+        graphPanel.setLocation(0, 0);
+        mainFrame.getContentPane().add(graphPanel);
     }
 
     private void buildGraphAndPairs() {
@@ -45,13 +54,13 @@ public class FileParser {
 //            if(inputData.charAt(i)!= ' ' && inputData.charAt(i)!= '\r' && inputData.charAt(i)!= '\n')
             point = inputData.charAt(i) - 48;
             i+=3;
-            starti = inputData.charAt(i) - 48;
+            starti = inputData.charAt(i) - 48 - 1;
             i+=2;
-            startj = inputData.charAt(i) - 48;
+            startj = inputData.charAt(i) - 48 - 1;
             i+=3;
-            endi = inputData.charAt(i) - 48;
+            endi = inputData.charAt(i) - 48 - 1;
             i+=2;
-            endj = inputData.charAt(i) - 48;
+            endj = inputData.charAt(i) - 48 - 1;
 
             graph[starti][startj] = point;
             graph[endi][endj] = point;

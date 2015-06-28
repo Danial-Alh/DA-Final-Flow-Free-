@@ -14,7 +14,7 @@ public class FlowFree
 {
     int[][] graph;
     Vector<PairPoint> pairPoints;
-    ResultGraph result;
+    public ResultGraph result;
     private static int[][] nextPoints =
             {
                     {0,1},

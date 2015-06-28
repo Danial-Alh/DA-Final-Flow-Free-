@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
  */
 public class FilePanel extends JPanel
 {
+    int w, h;
+    MainFrame mainFrame;
+
     JLabel label;
     JTextField textField;
     JButton button;
@@ -20,8 +23,12 @@ public class FilePanel extends JPanel
 
     JButton solveButton;
 
-    public FilePanel()
+    public FilePanel(int w, int h, final MainFrame mainFrame)
     {
+        this.w = w;
+        this.h = h;
+        this.mainFrame = mainFrame;
+
         setBorder(BorderFactory.createLineBorder(Color.black));
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -41,6 +48,7 @@ public class FilePanel extends JPanel
             @Override
             public void actionPerformed(ActionEvent evt) {
                 solveButtonActionPerformed(evt);
+                mainFrame.repaint();
             }
         });
 
@@ -62,7 +70,7 @@ public class FilePanel extends JPanel
         if(fileLocation != null)
         {
             FileParser myFileParser;
-            myFileParser = new FileParser(fileLocation);
+            myFileParser = new FileParser(fileLocation, w, h, mainFrame);
         }
     }
 }
