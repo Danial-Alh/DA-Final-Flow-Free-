@@ -13,14 +13,29 @@ import java.util.Vector;
  */
 public class MainFrame extends JFrame
 {
+    JPanel graphPanel, filePanel;
+
     public MainFrame(String arg0, int w, int h) {
         super(arg0);
         Dimension d = getToolkit().getScreenSize();
         setSize(w,h);
-        setLocation((d.width-w)/2,(d.height-h)/2);
+        setLocation((d.width-w)/2,(d.height-h)/2-30);
         setLayout(null);
+        setResizable(false);
 
-        getContentPane().setBackground(Color.GRAY);
+        //  temp
+//        graphPanel = new MainPanel(10, 4, w, h);
+//        graphPanel.setSize(w-6, h * 3 / 4);
+//        graphPanel.setLocation(0, 0);
+//        getContentPane().add(graphPanel);
+        // temp
+
+
+        filePanel = new FilePanel(w, h, this);
+        filePanel.setSize(w-6, h*1/4-27);
+        filePanel.setLocation(0, h * 3 / 4-1);
+        getContentPane().add(filePanel);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
