@@ -29,11 +29,11 @@ public class MainPanel extends JPanel
             for(int i=0; i<graphX; i++)
             {
                 tiles[i][j] = new Tile(result.getGraph()[i][j]);
-                tiles[i][j].setLocation(myOffsetX + i*50, myOffsetY + j*50);
+                tiles[i][j].setLocation(myOffsetX + i * 50, myOffsetY + j * 50);
                 add(tiles[i][j]);
             }
         }
-
+        System.out.print("Minimum is: " + result.getMin());
     }
 
 }
